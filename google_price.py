@@ -34,4 +34,4 @@ class google_read(object):
         
 s = google_read('aapl')   
 s.get_text()
-page = s.read_page()
+page = s.read_price()
