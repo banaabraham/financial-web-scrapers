@@ -16,7 +16,7 @@ class google_read(object):
         
         return self.page.split('\n')   
     
-    def read_page(self):
+    def read_price(self):
         #f = open(self.page,'r')
         f = self.page.split('\n')
         trigger = 0
