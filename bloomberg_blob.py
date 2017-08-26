@@ -32,16 +32,13 @@ class bloomberg(object):
         return self.newsclean        
     def analyze(self):
         for i in self.newsclean:
-            null = 0
-            positive = 0        
+            negative = 0        
             blob = TextBlob(i).sentiment
-            if blob.subjectivity == 0:
-                null+=1
-            if blob.polarity>0:
+            if blob.polarity<0:
                 print(i)
-                positive+=1           
-                sentiment=positive/(len(self.newsclean))
-        return sentiment*100 
+                negative+=1           
+        if negative>0:
+            print("Cautions!")
                         
         
 goog = bloomberg("exxon")
