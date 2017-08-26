@@ -1,12 +1,13 @@
 import urllib
 import re
-import pandas as pd
 from textblob import TextBlob
+from textblob.classifiers import NaiveBayesClassifier
+
 class bloomberg(object):
     def __init__(self,query):
         self.query = query
         
-    def get_text(self):
+    def get_page(self):
         url = 'https://www.bloomberg.com/search?query='+self.query
         hdr = {'User-Agent': 'Mozilla/5.0'}
         #print (url)
@@ -31,19 +32,30 @@ class bloomberg(object):
         self.newsclean = []
         for i in self.news:
             self.newsclean.append((re.sub(r'\W+', ' ', i)))           
-        return self.newsclean        
-    def analyze(self):
-        for i in self.newsclean:
-            negative = 0        
-            blob = TextBlob(i).sentiment
-            if blob.polarity<0:
-                print(i)
-                negative+=1           
-        if negative>0:
+        return self.newsclean 
+       
+    
+    def new(self):
+        train = [('I love this sandwich.', 'pos'),
+                ('This is an amazing place!', 'pos'),
+                ('I feel very good about these beers.', 'pos'),
+                ('This is my best work.', 'pos'),
+                ("What an awesome view", 'pos'),
+                ('I do not like this restaurant', 'neg'),
+                ('I am tired of this stuff.', 'neg'),
+                ("I can't deal with this", 'neg'),
+                ('He is my sworn enemy!', 'neg'),
+                ('My boss is horrible.', 'neg')]
+        new = [i for i in self.newsclean]
+        cl = NaiveBayesClassifier(train)
+        if cl.classify(new[1]) == "neg":
             print("Cautions!")
-                        
-        
-goog = bloomberg("exxon")
-page = goog.get_text()
-info = goog.get_info()    
-sentiment = goog.analyze()
+            print(new[1])
+        else:
+            print("it's good")
+            print(new[1])
+                               
+goog = bloomberg("google")
+page = goog.get_page()
+info = goog.get_info()
+goog.new() 
