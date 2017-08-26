@@ -25,7 +25,9 @@ class bloomberg(object):
         self.news = []
         
         for i in info:
-            self.news.append(str(re.findall('"body":.*"publishedAt"',i)).replace("body","").replace("publishedAt",""))
+            self.news.append(str(re.findall('"body":.*"publishedAt"',i))\
+                             .replace("body","").replace("publishedAt","")\
+                             .replace("<em>","").replace("</em>",""))
         self.newsclean = []
         for i in self.news:
             self.newsclean.append((re.sub(r'\W+', ' ', i)))           
