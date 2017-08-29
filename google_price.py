@@ -7,7 +7,7 @@ class google_read(object):
     def __init__(self,stock):
         self.stock = stock
         
-    def get_text(self):
+    def get_page(self):
         url = 'https://www.google.com/finance?q=IDX:'+self.stock
         hdr = {'User-Agent': 'Mozilla/5.0'}
         #print (url)
