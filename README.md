@@ -1,3 +1,3 @@
-# web-parser
+#financial-web-scrapers
 
-parses through investing.com and google finance pages to find ratios and current price of a stock.
+parses through several financial related websites and extract necessary information.
