@@ -5,7 +5,7 @@ from textblob.classifiers import NaiveBayesClassifier
 
 class bloomberg(object):
     def __init__(self,query):
-        self.query = query
+        self.query = urllib.parse.quote(query)
         
     def get_page(self):
         url = 'https://www.bloomberg.com/search?query='+self.query
@@ -45,17 +45,23 @@ class bloomberg(object):
                 ('I am tired of this stuff.', 'neg'),
                 ("I can't deal with this", 'neg'),
                 ('He is my sworn enemy!', 'neg'),
-                ('My boss is horrible.', 'neg')]
+                ('My boss is horrible.', 'neg'),
+                ('Wells Fargo shares slipped 3% in extended trading on Tuesday before recovering.','neg'),
+                ('Brace for more negative news from Wells Fargo','neg'),
+                ('Harvey makes landfall as Cat 4; gas price hikes to depend on flooding damage','neg'),
+                ('Trucking stocks ride higher','pos'),
+                ('Stocks Drop, Gold Leads Havens After Korea Missile: Markets Wrap','neg')]
         new = [i for i in self.newsclean]
         cl = NaiveBayesClassifier(train)
         if cl.classify(new[1]) == "neg":
-            print("Cautions!")
+            print("Cautions! \n")
             print(new[1])
         else:
-            print("it's good")
+            print("it's good news!")
             print(new[1])
-                               
-goog = bloomberg("google")
-page = goog.get_page()
-info = goog.get_info()
-goog.new() 
+
+query = input("What do you looking for?: ")                               
+info = bloomberg(query)
+page = info.get_page()
+info = info.get_info()
+info.new()   
